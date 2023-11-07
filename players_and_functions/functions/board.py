@@ -1,7 +1,5 @@
-"""Implement the class board which will hold the sccore"""
-
+"""Implement the class board which will hold the state of the game and players"""
 import random
-
 
 class Board:
     """The board which hold scores"""
@@ -44,7 +42,7 @@ class Board:
         return self.players_names[player_object]
 
     def print(self):
-        """basic print"""
+        """basic print can be changed in the futur if GUI"""
 
         for player in self.score:
             print(self.get_name(player[0]) + " "*(15 - len(self.players_names[player[0]])), end='')
@@ -197,7 +195,7 @@ class Board:
         return self.score[i][0]
 
     def make_a_throw(self, player_object):
-        """will intereact with an object Player to decide the trow """
+        """will intereact with an object Player to decide the throw """
 
         # need the  player because bonus of + 100 if 5 in a row even if not scored
         # ( TODO : weird have to check that again)

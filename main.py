@@ -1,10 +1,13 @@
 """A basic Yams game based on the one implemented on the mobile app "plato", goal is to train a reinforced model on it"""
-from f import Player
-from board import Board
-from players import *
+
+from players_and_functions import functions
+
+from players_and_functions.functions.player_template import Player
+from players_and_functions.functions.board import Board
+
 import os
-from human import Human
-from greedymathguy import GreedyMathguy
+from players_and_functions.human import Human
+from players_and_functions.greedymathguy import GreedyMathguy
 
 
 #ais_names = os.listdir("ais")
@@ -24,18 +27,17 @@ me_too = Player()
 me_too_too = Player()
 greed = GreedyMathguy()
 
-board = Board([GreedyMathguy() for i in range(500)])
+board = Board([GreedyMathguy()])#, Player(), Human("You")])
 
 while board.game_ended() is False:
-
-    #board.print()
+    board.print()
     player = board.who_is_next_player()
     choice, dices = board.make_a_throw(player)
     board.update(player, choice, dices)
 
-    # print(f"{board.get_name(player)} just played {choice} with {dices}",
-    #       f"and scored {board.points[choice](dices) if board.is_playable(dices, choice) else 0 }")
-    # print("")
+    print(f"{board.get_name(player)} just played {choice} with {dices}",
+          f"and scored {board.points[choice](dices) if board.is_playable(dices, choice) else 0 }")
+    print("")
 
 board.print() # we have to change that
 

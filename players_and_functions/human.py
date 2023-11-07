@@ -1,8 +1,8 @@
 """This module implement the class Human, 
-which is design to manually play the yams"""
+which is design to manually play the yams (interacting with the user with input() and print() method)"""
 
-from f import Player
-from board import Board
+from .functions.player_template import Player
+from .functions.board import Board
 
 
 class Human(Player):

@@ -1,6 +1,5 @@
-import random
 import math
-from board import Board
+
 
 class MathDice:
 
@@ -116,7 +115,7 @@ class MathDice:
         n = len(dices_to_find)
         return math.factorial(n)/(6**n)
 
-
+    @staticmethod
     def long_straight(dices, selec_dices):
         """"""
 
@@ -128,15 +127,7 @@ class MathDice:
         return round(p1 + p2, 5) # because P(possibilities) = p1 + p2 - 0
 
     # def proba_specific(dices, selec_dices, dices_to_find):
-
-    #     list_of_selec_dices = MathDice.find_dices(dices, selec_dices)
-
-    #     left_to_find = dices_to_find.copy()
-
-    #     # removing dices we already have
-    #     for dice in list_of_selec_dices:
-    #         if dice in left_to_find:
-    #             left_to_find.remove(dice)
+    # TODO : will give proba for specific dice (will be useful for (p(s,r|s',a)))
 
 
     @staticmethod
@@ -220,45 +211,3 @@ class MathDice:
         score[14] = 0 if score[14] else 1
 
         return score
-
-# Defining what an object player should do
-class Player:
-    """ Defining what a class player should have 
-    if you want your player to have a name add a player.name field !"""
-
-    # no init method beause it doesn't have the purpose to be instancied only to be a parent
-    # idk if it's a correct way to implement things but at least it's clear
-
-
-    def make_a_move(self, board : Board, dices : list, throw_left : int)-> (int, list):
-        """
-
-        You have to chose on which : combo you want to play
-        or (if you haven't use all your throws) the dices you want to keep those you want to throw
-
-        Main information is :
-            - the number of throwing dices you have left 
-            - the dices you currently have in hand
-
-            
-        Parameters
-        ----------
-        board : Board object
-        where everything is saved and calculated, see help(board)
-        dices : list of int
-        the dices you currently have in hand
-        throw_left : int
-        the number of throw you have left, if 0 you have to make a choice !
-
-        Returns
-        -------
-        out : int, list of int
-        int for the choice you make (if you want to throw dices again, still return something)
-        list of int : the dice you want to keep and those you want to throw again
-        by example [0, 1, 1, 1, 1] mean that you want to keep the four last dices and throw 
-        again the first one and [1, 1, 1, 1, 1] mean that you want to keep them all and stop 
-        (then the choice you return is important !)
-        """
-
-        #default comportement choice is the first in the list and you keep all dices
-        return board.possibilities(self)[0], [1, 1, 1, 1 ,1]

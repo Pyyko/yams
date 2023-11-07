@@ -1,9 +1,13 @@
-from f import Player, MathDice
-from board import Board
+from .functions.mathdice import MathDice
+from .functions.player_template import Player
+from .functions.board import Board
 
 
 class GreedyMathguy(Player):
-    """justa greedy guy who chose his dices according to"""
+    """justa greedy guy who chose his dices accordin to a greedy algorithm"""
+
+    def __init__(self, name="greedy_math_guy"):
+        self.name = name
 
     def make_a_move(self, board : Board, dices : list, throw_left : int)-> (int, list):
 
@@ -15,16 +19,22 @@ class GreedyMathguy(Player):
         selec_dices = [0, 0, 0, 0, 0]
         best_expectation = 0
 
-        for a in [[0],[1]]:
-            for b in [[0],[1]]:
-                for c in [[0],[1]]:
-                    for d in [[0],[1]]:
-                        for e in [[0],[1]]:
-                            value = sum(self.value_of_this_one(board, dices, a+b+c+d+e)[1:])
-                            if value > best_expectation:
-                                best_expectation = value
-                                selec_dices = a+b+c+d+e
+        # for best greedy move : law of total probability on every figure
+        # "what dice should i chose that give me the bigger expectation of my score after next throw"
+        dices_kept = 0
+        for dices_kept in range(2**5):
 
+            dices_kept_list= list(map(int, bin(dices_kept)[2:]))
+            dices_kept_list = [0]*(5-len(dices_kept_list)) + dices_kept_list #completing
+
+            value = sum(self.value_of_this_one(board, dices, dices_kept_list)[1:])
+            if value > best_expectation:
+                best_expectation = value
+                selec_dices = dices_kept_list
+
+        print("\nI have ",dices)
+        print(f"as i'm greedy i chose : {self.best_choice(self.value_of_this_one(board, dices, selec_dices), board)}, {selec_dices}")
+        
         return self.best_choice(self.value_of_this_one(board, dices, selec_dices), board), selec_dices
 
 
